@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+ <script type="text/javascript" src="comm/jquery/jquery-2.1.1.js"></script>
+ <script type="text/javascript">
+ 	$(document).ready(function(){
+ 		//发起ajax的异步请求，获取所有的新闻类型，然后将类型放在下拉列表框中
+ 		//$.get();//jquery发起get方式的ajax异步请求
+ 		//$.post();//jquery发起post方式的ajax异步请求
+ 		/*
+ 			参数1：ajax异步请求提交的URL地址
+ 			参数2：需要提交给服务器端的参数列表（json）
+ 			参数3：ajax异步请求处理完毕后的回调方法，即xhr.readyState==4 && xhr.status==200
+ 			参数4：指明服务器端响应回来的内容的类型（json,text）
+ 		*/
+ 		$.get("NewsTypeAction",{},function(data){///data是Servlet写回来的内容。
+ 			/* data：json */
+ 			$.each(data,function(index,typejson){
+ 				
+ 				console.log("<%=request.getAttribute(\"cpage\")%>");
+ 				var a=$('<option></option>').attr('value',typejson.typeid).html(typejson.typename).appendTo($('#typeid'));
+ 			});
+ 		},'json');
+ 	});
+ </script>
+</head>
+<body>
+	add.html
+	
+	<fieldset>
+		<legend>发布新闻</legend>
+		<form action="">
+			<div>
+				新闻标题:<input type="text" name="title">
+			</div>
+			<div>
+				新闻内容:<input type="text" name="body">
+			</div>
+			<div>
+				新闻类型：
+				<select name="typeid" id="typeid">
+				</select>
+			</div>
+			<div>
+				<input type="submit" value="发布新闻">
+			</div>
+		</form>
+	</fieldset>
+</body>
+</html>
